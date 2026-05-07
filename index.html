@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Twin USAMV București — Symposium 2026</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f8faf6;
+    --card: #ffffff;
+    --card-soft: #f1f8e9;
+    --line: #c8e6c9;
+    --line-strong: #a5d6a7;
+    --text: #213324;
+    --text-body: #3e5042;
+    --muted: #667869;
+    --primary: #1B5E20;       /* USAMV deep green */
+    --accent1: #2E7D32;       /* USAMV medium green */
+    --accent2: #66BB6A;       /* USAMV light green */
+    --dark-grn: #0F3C15;
+    --gold: #FFB300;
+    --red: #C62828;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    line-height: 1.5; }
+  header {
+    padding: 70px 40px 50px;
+    background: linear-gradient(135deg, #0F3C15 0%, #1B5E20 35%, #2E7D32 70%, #66BB6A 100%);
+    position: relative; overflow: hidden;
+    border-bottom: 4px solid var(--gold);
+    color: white;
+  }
+  header::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 30%, rgba(255,179,0,0.15), transparent 50%),
+                radial-gradient(circle at 15% 80%, rgba(255,255,255,0.08), transparent 50%);
+    pointer-events: none;
+  }
+  header .badge {
+    display: inline-block; padding: 5px 14px; border-radius: 999px;
+    background: rgba(255,179,0,0.22); color: var(--gold);
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    margin-bottom: 18px; position: relative;
+  }
+  header h1 {
+    font-size: 44px; font-weight: 700; margin: 0 0 12px;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    line-height: 1.1; position: relative; color: white;
+  }
+  header h2 {
+    font-size: 22px; font-weight: 300; margin: 0 0 8px;
+    color: var(--gold); font-style: italic; position: relative;
+  }
+  header h3 {
+    font-size: 16px; font-weight: 400; margin: 0; color: rgba(255,255,255,0.85);
+    position: relative;
+  }
+  .authors-bar {
+    display: flex; gap: 30px; flex-wrap: wrap; padding: 20px 40px;
+    background: var(--bg2); border-bottom: 1px solid var(--line);
+    font-size: 13px; color: var(--text-body);
+  }
+  .authors-bar strong { color: var(--accent1); font-weight: 700; }
+  main { max-width: 1500px; margin: 0 auto; padding: 50px 40px; }
+  section { margin-bottom: 70px; }
+  h3.section-title {
+    font-size: 28px; margin: 0 0 8px; color: var(--dark-grn);
+    border-left: 4px solid var(--accent1); padding-left: 14px; font-weight: 700;
+  }
+  h3.section-title .eyebrow {
+    display: block; font-size: 11px; font-weight: 700; color: var(--accent1);
+    letter-spacing: 1.5px; margin-bottom: 4px; text-transform: uppercase;
+  }
+  .lead { color: var(--text-body); font-size: 15px; max-width: 900px; margin: 0 0 24px; }
+  .grid { display: grid; gap: 16px; }
+  .stats { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .stat {
+    background: var(--card-soft); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+  }
+  .stat:hover { transform: translateY(-3px); border-color: var(--accent1);
+    box-shadow: 0 12px 28px -10px rgba(46,125,50,0.35); }
+  .stat .k { font-size: 11px; text-transform: uppercase; color: var(--muted);
+    letter-spacing: 1.2px; font-weight: 700; }
+  .stat .v { font-size: 26px; margin-top: 8px; font-weight: 700; color: var(--accent1);
+    font-family: "Segoe UI", sans-serif; }
+  .stat .v small { color: var(--muted); font-size: 13px; font-weight: 400; display: block; }
+  .two-col { grid-template-columns: 1fr 1fr; }
+  .three-col { grid-template-columns: repeat(3, 1fr); }
+  .four-col { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 1100px) { .two-col, .three-col, .four-col { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 24px; transition: border-color 0.18s, box-shadow 0.18s;
+    box-shadow: 0 2px 12px -4px rgba(15,60,21,0.08);
+  }
+  .card:hover { box-shadow: 0 10px 28px -10px rgba(46,125,50,0.25); }
+  .card.gold { border-left: 4px solid var(--gold); }
+  .card.cyan { border-left: 4px solid var(--accent1); }
+  .card.green { border-left: 4px solid var(--accent2); }
+  .card.red { border-left: 4px solid var(--red); }
+  .card h4 { margin: 0 0 12px; font-size: 17px; color: var(--accent1); font-weight: 700; }
+  .card.gold h4 { color: #B98800; }
+  .pill {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    margin-bottom: 14px; text-transform: uppercase;
+  }
+  .pill.cyan { background: rgba(46,125,50,0.15); color: var(--accent1); }
+  .pill.gold { background: rgba(255,179,0,0.18); color: #B98800; }
+  .pill.green { background: rgba(102,187,106,0.20); color: #2E7D32; }
+  .pill.red { background: rgba(198,40,40,0.13); color: var(--red); }
+  ul.tight { margin: 0; padding-left: 22px; }
+  ul.tight li { margin: 6px 0; color: var(--text-body); }
+  table.spec { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.spec td { padding: 9px 0; border-bottom: 1px dashed var(--line-strong); }
+  table.spec td:first-child { color: var(--muted); width: 50%; }
+  table.spec td:last-child { color: var(--text); font-weight: 700; text-align: right; }
+  .frame-box {
+    width: 100%; border-radius: 14px; overflow: hidden;
+    border: 2px solid var(--accent1); background: #ffffff;
+    box-shadow: 0 16px 40px -12px rgba(15,60,21,0.25);
+  }
+  .frame-box iframe { width: 100%; height: 720px; border: 0; display: block; }
+  .frame-meta {
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    margin-top: 14px; padding: 14px 18px; background: var(--card-soft);
+    border: 1px solid var(--line); border-radius: 10px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; background: var(--accent1); color: #ffffff;
+    text-decoration: none; border-radius: 8px;
+    font-weight: 700; font-size: 14px;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px -6px rgba(46,125,50,0.5);
+    background: var(--primary); }
+  .btn.gold { background: var(--gold); color: #3D2900; }
+  .btn.gold:hover { box-shadow: 0 8px 22px -6px rgba(255,179,0,0.5); background: #E69E00; }
+  img.full { width: 100%; border-radius: 10px; border: 1px solid var(--line);
+    box-shadow: 0 8px 28px -10px rgba(15,60,21,0.18); display: block; }
+  figure { margin: 0; }
+  figcaption { color: var(--muted); font-size: 12px; font-style: italic;
+    text-align: center; margin-top: 8px; }
+  .nordic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 1100px) { .nordic-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px)  { .nordic-grid { grid-template-columns: 1fr; } }
+  .step {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px; position: relative; overflow: hidden;
+    box-shadow: 0 2px 12px -4px rgba(15,60,21,0.08);
+  }
+  .step .num { font-size: 38px; font-weight: 700; color: var(--accent1);
+    margin: 0; line-height: 1; }
+  .step .ttl { font-size: 14px; font-weight: 700; margin: 8px 0 6px; color: var(--dark-grn);
+    text-transform: uppercase; letter-spacing: 1px; }
+  .step .desc { font-size: 12px; color: var(--muted); margin: 0; }
+  footer {
+    padding: 40px; text-align: center; color: var(--muted);
+    border-top: 1px solid var(--line); font-size: 12px;
+    background: var(--bg2);
+  }
+  .ribbon-banner {
+    background: linear-gradient(90deg, #0F3C15, #1B5E20 40%, #2E7D32 100%);
+    padding: 22px 28px; border-radius: 14px; margin: 30px 0;
+    box-shadow: 0 14px 36px -12px rgba(15,60,21,0.4);
+    color: white;
+  }
+  .ribbon-banner .label { font-size: 11px; font-weight: 700; color: var(--gold);
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .ribbon-banner h4 { margin: 0; font-size: 22px; color: white; }
+  .ribbon-banner p { margin: 6px 0 0; color: rgba(255,255,255,0.92); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="badge">USAMV BUCUREȘTI · STUDENT SYMPOSIUM 2026</span>
+  <h1>Development of a Digital Twin<br>for the USAMV Bucharest Campus</h1>
+  <h2>Using Terrestrial Scanning and Geospatial Technologies</h2>
+  <h3>A Comparative Analysis between Romania and Nordic Countries</h3>
+</header>
+
+<div class="authors-bar">
+  <span><strong>Authors:</strong> Roxana Maria Haican · Alexandra-Ionela Nistor · Nicoleta Pavel · Ana Maria Savu · Iulian-Sebastian Hagiu · Vlad-Andrei Haican</span>
+  <span><strong>Coord:</strong> Lect. PhD. Eng. Alexandru Calin</span>
+  <span><strong>Email:</strong> alenistor2002@gmail.com</span>
+</div>
+
+<main>
+
+<!-- ABSTRACT / GOAL -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Context · Objectives</span>What is a Digital Twin?</h3>
+  <p class="lead">
+    A Digital Twin is a three-dimensional digital replica of a real-world environment, increasingly used in
+    urban planning, infrastructure management, and academic research. While Nordic countries have systematically
+    integrated such frameworks, Romania exhibits limited adoption — primarily due to financial constraints and
+    restricted access to advanced geospatial infrastructure.
+  </p>
+  <div class="ribbon-banner">
+    <div class="label">RESEARCH GOAL</div>
+    <h4>Develop a detailed digital twin of the USAMV Bucharest campus</h4>
+    <p>using cost-effective geospatial technologies, while comparing the methodology with Nordic practices.</p>
+  </div>
+</section>
+
+<!-- KPI HEADLINE -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Key numbers</span>Mission at a glance</h3>
+  <div class="grid stats">
+    <div class="stat"><div class="k">UAV photos</div><div class="v">419 <small>geo-tagged</small></div></div>
+    <div class="stat"><div class="k">Flight duration</div><div class="v">32.4 min <small>4.99 km path</small></div></div>
+    <div class="stat"><div class="k">SLAM poses</div><div class="v">17,272 <small>@ 9.1 Hz</small></div></div>
+    <div class="stat"><div class="k">Scan duration</div><div class="v">31.5 min <small>1.66 km path</small></div></div>
+    <div class="stat"><div class="k">LiDAR points</div><div class="v">6.5 M <small>14 PCD files</small></div></div>
+    <div class="stat"><div class="k">RMS error</div><div class="v">&lt; 3 cm <small>after ICP</small></div></div>
+    <div class="stat"><div class="k">LOD</div><div class="v">200–300 <small>BIM-compatible</small></div></div>
+    <div class="stat"><div class="k">Cost reduction</div><div class="v">60–80% <small>vs. high-end TLS</small></div></div>
+  </div>
+</section>
+
+<!-- NORDIC -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">State of the art</span>Nordic Reference Frameworks</h3>
+  <p class="lead">National initiatives systematically integrate UAV photogrammetry and SLAM LiDAR into urban planning, achieving fit-for-purpose accuracy of ≈ 2–5 cm.</p>
+  <div class="nordic-grid">
+    <div class="card">
+      <span class="pill gold">FINLAND</span>
+      <h4>Helsinki 3D+</h4>
+      <p style="color:var(--text); font-size:13px;">City-scale digital twin · UAV photogrammetry + mobile mapping + SLAM handheld scanners.</p>
+      <p style="color:var(--muted); font-size:11px; font-style:italic;">Agisoft Metashape · CloudCompare · GIS</p>
+    </div>
+    <div class="card">
+      <span class="pill gold">DENMARK</span>
+      <h4>GeoDanmark</h4>
+      <p style="color:var(--text); font-size:13px;">Distributed geospatial acquisition · GNSS RTK · DJI UAV · high-res RGB sensors.</p>
+      <p style="color:var(--muted); font-size:11px; font-style:italic;">Pix4Dmapper · Metashape · ArcGIS Pro</p>
+    </div>
+    <div class="card">
+      <span class="pill gold">SWEDEN</span>
+      <h4>Lantmäteriet</h4>
+      <p style="color:var(--text); font-size:13px;">Mobile LiDAR + UAV (Phantom, Matrice) · GNSS/IMU continuous capture along corridors.</p>
+      <p style="color:var(--muted); font-size:11px; font-style:italic;">SfM in Metashape · CloudCompare</p>
+    </div>
+    <div class="card">
+      <span class="pill gold">NORWAY</span>
+      <h4>Kartverket</h4>
+      <p style="color:var(--text); font-size:13px;">National mapping authority · UAV + terrestrial LiDAR · open-data culture.</p>
+      <p style="color:var(--muted); font-size:11px; font-style:italic;">Standardized 2–5 cm urban accuracy</p>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Workflow</span>Integrated Multi-Sensor Methodology</h3>
+  <div class="four-col" style="display:grid; gap:14px;">
+    <div class="step"><p class="num" style="color:var(--primary)">01</p><p class="ttl">Acquisition</p><p class="desc">Aerial UAV + Terrestrial SLAM</p></div>
+    <div class="step"><p class="num" style="color:var(--accent1)">02</p><p class="ttl">Processing</p><p class="desc">SfM/MVS in Metashape · SLAM optimization in FJD Trion Studio</p></div>
+    <div class="step"><p class="num" style="color:var(--accent2)">03</p><p class="ttl">Alignment</p><p class="desc">Coarse + ICP fine registration in CloudCompare</p></div>
+    <div class="step"><p class="num" style="color:var(--gold)">04</p><p class="ttl">Digital Twin</p><p class="desc">Unified 3D model · LOD 200–300 · RMS &lt; 3 cm</p></div>
+  </div>
+</section>
+
+<!-- DJI Mini 2 -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">UAV Photogrammetry</span>Aerial Acquisition — DJI Mini 2</h3>
+  <div class="grid two-col">
+    <div class="card cyan">
+      <h4>Equipment specifications</h4>
+      <table class="spec">
+        <tr><td>Weight</td><td>&lt; 249 g</td></tr>
+        <tr><td>Camera</td><td>12 MP · 4000 × 3000 px</td></tr>
+        <tr><td>Focal length</td><td>4.49 mm (≈ 24 mm equiv.)</td></tr>
+        <tr><td>Aperture / ISO</td><td>f/2.8 · ISO 100</td></tr>
+        <tr><td>Stabilization</td><td>3-axis mechanical gimbal</td></tr>
+        <tr><td>Positioning</td><td>GNSS (GPS + GLONASS), no RTK/PPK</td></tr>
+        <tr><td>Geo-referencing</td><td>via Ground Control Points (GCPs)</td></tr>
+        <tr><td>Flight strategy</td><td>Nadir 30–50 m + oblique 45°</td></tr>
+        <tr><td>Image overlap</td><td>70–80% forward & lateral</td></tr>
+      </table>
+    </div>
+    <figure>
+      <img class="full" src="assets/drone_harta.png" alt="UAV flight track over USAMV">
+      <figcaption>Fig. 1 — Aerial flight track over USAMV campus (Esri imagery)</figcaption>
+    </figure>
+  </div>
+  <div style="margin-top:24px;">
+    <figure>
+      <img class="full" src="assets/drone_altitudine.png" alt="Altitude profile">
+      <figcaption>Fig. 2 — Altitude profile (stable plateau ≈ 206 m MSL ≈ 135 m AGL)</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- FJD Trion S2 -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">SLAM LiDAR</span>Terrestrial Acquisition — FJD Trion S2</h3>
+  <div class="grid two-col">
+    <div class="card gold">
+      <h4>Equipment specifications</h4>
+      <table class="spec">
+        <tr><td>Weight</td><td>2 kg (with battery)</td></tr>
+        <tr><td>LiDAR sensor</td><td>multi-line laser</td></tr>
+        <tr><td>Field of view</td><td>360° × 270°</td></tr>
+        <tr><td>Range</td><td>up to 120 m (80% reflectivity)</td></tr>
+        <tr><td>Capture rate</td><td>640.000 pts / s</td></tr>
+        <tr><td>Relative accuracy</td><td>up to 1.2 cm</td></tr>
+        <tr><td>Cameras</td><td>2 × 12 MP panoramic</td></tr>
+        <tr><td>Positioning</td><td>SLAM + IMU + VIO + RTK / PPK</td></tr>
+        <tr><td>Operating mode</td><td>handheld, walking 0.5–1.0 m/s</td></tr>
+      </table>
+    </div>
+    <figure>
+      <img class="full" src="assets/scan_traj_top.png" alt="SLAM trajectory top view">
+      <figcaption>Fig. 3 — SLAM trajectory · 17,272 poses · color = time (start → end)</figcaption>
+    </figure>
+  </div>
+  <div class="grid two-col" style="margin-top:24px;">
+    <figure>
+      <img class="full" src="assets/scan_pc_top.png" alt="Point cloud top view">
+      <figcaption>Fig. 4 — LiDAR point cloud (top) overlaid with white scanner trajectory</figcaption>
+    </figure>
+    <figure>
+      <img class="full" src="assets/scan_pc_3d.png" alt="Point cloud 3D">
+      <figcaption>Fig. 5 — LiDAR point cloud — isometric 3D view</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- RGB vs Intensity -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Visualization Modes</span>Point Cloud — RGB vs Intensity</h3>
+  <p class="lead">Two complementary visualization modes derived from the unified point cloud — RGB (left of each pair) for visual realism, intensity (right) for material analysis.</p>
+  <div class="grid three-col">
+    <figure>
+      <img class="full" src="assets/usamv_rgb_vs_intensity_top.jpg" alt="Top-view RGB vs intensity">
+      <figcaption>Fig. 6 — Top-view aerial · RGB ←  →  intensity</figcaption>
+    </figure>
+    <figure>
+      <img class="full" src="assets/usamv_rgb_vs_intensity_aerial.jpg" alt="Aerial façade RGB vs intensity">
+      <figcaption>Fig. 7 — Façade aerial · RGB ←  →  intensity</figcaption>
+    </figure>
+    <figure>
+      <img class="full" src="assets/usamv_rgb_vs_intensity_facade.jpg" alt="Façade close-up RGB vs intensity">
+      <figcaption>Fig. 8 — Façade close-up · RGB ←  →  intensity</figcaption>
+    </figure>
+  </div>
+  <div class="ribbon-banner" style="margin-top:24px;">
+    <div class="label">VISUALIZATION INSIGHT</div>
+    <p style="font-size:14px; line-height:1.6;">
+      <strong>RGB visualization</strong> preserves true color from camera images — useful for visual interpretation and presentations.
+      <strong>Intensity visualization</strong> reflects LiDAR return strength — highlights material reflectivity and structural details invisible in RGB.
+    </p>
+  </div>
+</section>
+
+<!-- FJD Trion Studio + Scanner -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Acquisition Software</span>FJD Trion Studio — Real-time Interface</h3>
+  <p class="lead">During the campus scan, the FJD Trion Studio app on the device shows a live floor-plan view of the SLAM trajectory together with the dual fisheye camera feeds.</p>
+  <div class="grid two-col">
+    <figure>
+      <img class="full" src="assets/fjd_trion_studio.jpg" alt="FJD Trion Studio interface">
+      <figcaption>Fig. 9 — FJD Trion Studio: floor-plan view (top) and dual camera feeds (bottom)</figcaption>
+    </figure>
+    <div>
+      <figure style="margin-bottom:18px;">
+        <img class="full" src="assets/fjd_scanner_field.png" alt="FJD Trion S2 in the field">
+        <figcaption>Fig. 10 — FJD Trion S2 deployed on USAMV grounds</figcaption>
+      </figure>
+      <div class="card cyan">
+        <h4>Interface features</h4>
+        <ul class="tight">
+          <li>Real-time floor-plan view</li>
+          <li>Live trajectory tracking (green path)</li>
+          <li>Dual camera preview (Left + Right)</li>
+          <li>On-site quality validation</li>
+          <li>Loop closure indication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:20px;">
+    <video class="full" controls preload="metadata" poster="assets/fjd_trion_studio.jpg">
+      <source src="assets/workflow_video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <figcaption>Video — Workflow demonstration (from acquisition through processing)</figcaption>
+  </div>
+</section>
+
+<!-- Live orthophoto -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Live viewer · 2D map</span>Interactive Orthophoto</h3>
+  <p class="lead">Geo-referenced orthophoto of the USAMV / FIFIM area, served on the UGA Aerial Point Cloud Hub.</p>
+  <div class="frame-box">
+    <iframe src="https://drone.ugaerial.ro/Orto_-_Facultate_Fifim_-_Test.tif/map"
+            allow="fullscreen" loading="lazy"
+            title="Orthophoto USAMV / FIFIM"></iframe>
+  </div>
+  <div class="frame-meta">
+    <a class="btn" target="_blank" href="https://drone.ugaerial.ro/Orto_-_Facultate_Fifim_-_Test.tif/map">Open in new tab →</a>
+    <span style="color:var(--muted); font-size:13px;">2D map view · pan/zoom · measurements · Stereo 70 (EPSG:3844) · mobile-friendly</span>
+  </div>
+</section>
+
+<!-- Live point cloud -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Live viewer · 3D point cloud</span>Interactive Point Cloud — Potree</h3>
+  <p class="lead">Full LiDAR point cloud of the FIFIM Faculty viewable in any web browser. Includes measurement, sections, and georeferenced PNG export.</p>
+  <div class="frame-box">
+    <iframe src="https://drone.ugaerial.ro/LAZ_LIDAR_DRONA_FIFIM.las"
+            allow="fullscreen" loading="lazy"
+            title="LiDAR Point Cloud — Potree viewer"></iframe>
+  </div>
+  <div class="frame-meta">
+    <a class="btn gold" target="_blank" href="https://drone.ugaerial.ro/LAZ_LIDAR_DRONA_FIFIM.las">Open in new tab →</a>
+    <span style="color:var(--muted); font-size:13px;">3D rotate / zoom · measurements · sections · PNG+PGW export · Solid Surface mode</span>
+  </div>
+</section>
+
+<!-- Cost & comparison -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Economic Impact</span>Cost & Time Efficiency</h3>
+  <div class="grid two-col">
+    <div class="card cyan">
+      <h4>Equipment cost reduction</h4>
+      <div style="font-size:64px; font-weight:700; color:var(--primary); margin:14px 0; text-shadow:0 6px 24px rgba(46,125,50,0.35);">60 – 80 %</div>
+      <p style="color:var(--muted); font-style:italic; font-size:13px;">vs. high-end terrestrial laser scanners (Leica · FARO · Riegl)</p>
+    </div>
+    <div class="card gold">
+      <h4>Acquisition time reduction</h4>
+      <div style="font-size:64px; font-weight:700; color:var(--gold); margin:14px 0; text-shadow:0 6px 24px rgba(255,179,0,0.35);">50 – 65 %</div>
+      <p style="color:var(--muted); font-style:italic; font-size:13px;">vs. conventional total-station + static TLS workflow</p>
+    </div>
+  </div>
+</section>
+
+<!-- Conclusions -->
+<section>
+  <h3 class="section-title"><span class="eyebrow">Key takeaways</span>Conclusions</h3>
+  <div class="grid three-col">
+    <div class="card cyan">
+      <div style="font-size:42px; font-weight:700; color:var(--primary)">01</div>
+      <h4 style="color:var(--dark-grn); margin-top:8px;">FEASIBILITY</h4>
+      <p>An accurate, scalable digital twin can be built in Romania with consumer-grade equipment.</p>
+    </div>
+    <div class="card green">
+      <div style="font-size:42px; font-weight:700; color:var(--accent1)">02</div>
+      <h4 style="color:var(--dark-grn); margin-top:8px;">COMPLEMENTARITY</h4>
+      <p>Multi-sensor fusion (UAV + SLAM LiDAR) overcomes occlusion and coverage limits.</p>
+    </div>
+    <div class="card gold">
+      <div style="font-size:42px; font-weight:700; color:var(--gold)">03</div>
+      <h4 style="color:var(--dark-grn); margin-top:8px;">ADOPTABILITY</h4>
+      <p>Methodology aligned with Nordic practices — directly transferable to Romanian institutional contexts.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Digital Twin USAMV București · Symposium 2026 · UGA Aerial Point Cloud Hub<br>
+  Corresponding author: alenistor2002@gmail.com · Scientific Coordinator: Lect. PhD. Eng. Alexandru Calin
+</footer>
+
+</body>
+</html>
